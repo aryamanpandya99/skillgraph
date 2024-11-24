@@ -1,5 +1,4 @@
 from pyvis.network import Network
-import random
 
 # Create a new network
 net = Network(height="750px", width="100%", bgcolor="#ffffff", font_color="black", directed=True)
