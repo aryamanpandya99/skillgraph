@@ -1,7 +1,7 @@
 import argparse
 import sys
 from typing import List
-from skillgraph.setup.subjects import generate_subject
+from skillgraph.setup.subjects import generate_subject, generate_topic_map
 
 def parse_args() -> argparse.Namespace:
     """Parse command line arguments."""
@@ -26,6 +26,9 @@ def interact_with_user(model: str) -> None:
     print(subject_description, "\n")
     for subtopic in subtopics:
         print(f" - {subtopic.name}: {subtopic.description} \n Required: {subtopic.required} \n")
+    
+    topic_map = generate_topic_map(subtopics)
+    print(topic_map.content[0].parsed.mapping)
 
 def main() -> int:
     """Main entry point."""
