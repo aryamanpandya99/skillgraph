@@ -1,6 +1,6 @@
 import argparse
 import sys
-from typing import List
+from skillgraph.setup.graph import SkillGraph
 from skillgraph.setup.subjects import generate_subject, generate_topic_map
 
 def parse_args() -> argparse.Namespace:
@@ -27,8 +27,11 @@ def interact_with_user(model: str) -> None:
     for subtopic in subtopics:
         print(f" - {subtopic.name}: {subtopic.description} \n Required: {subtopic.required} \n")
     
-    topic_map = generate_topic_map(subtopics)
-    print(topic_map.content[0].parsed.mapping)
+    topic_map = generate_topic_map(subtopics).content[0].parsed.mapping
+    print(topic_map)
+    
+    skill_graph = SkillGraph(topic_map)
+    skill_graph.show()
 
 def main() -> int:
     """Main entry point."""

@@ -1,9 +1,10 @@
 import ell 
 from pydantic import BaseModel, Field
-from typing import List, Dict
+from typing import List
 
 
 class Subtopic(BaseModel):
+    """A subtopic is a high level topic that is part of a subject."""
     name: str = Field(description="**Only** the name of the subtopic")
     description: str = Field(
         description="A brief description of the subtopic and how it relates to the parent subject"
@@ -14,6 +15,7 @@ class Subtopic(BaseModel):
     )
 
 class SubjectBreakdown(BaseModel):
+    """A breakdown of a subject into subtopics."""
     description: str = Field(
         description="""A brief description of the subject, e.g. 'Mathematics' and the 
         subtopics that are part of the subject"""
@@ -24,12 +26,14 @@ class SubjectBreakdown(BaseModel):
     )
 
 class Mapping(BaseModel):
+    """A mapping of dependencies between a list of topics."""
     topic: str = Field(description="The topic name")
     dependencies: List[str] = Field(
         description="A list of topic names that the topic depends on"
     )
 
 class TopicMap(BaseModel):
+    """A mapping of dependencies between a list of topics."""
     mapping: List[Mapping] = Field(
         description="""A mapping of dependencies between a list of topics.
         The key is the topic name and the value is the topic name that it depends on. 
