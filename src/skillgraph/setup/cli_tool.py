@@ -28,9 +28,8 @@ def interact_with_user(model: str) -> None:
         print(f" - {subtopic.name}: {subtopic.description} \n Required: {subtopic.required} \n")
     
     topic_map = generate_topic_map(subtopics).content[0].parsed.mapping
-    print(topic_map)
     
-    skill_graph = SkillGraph(topic_map)
+    skill_graph = SkillGraph(subject, topic_map)
     skill_graph.show()
 
 def main() -> int:
