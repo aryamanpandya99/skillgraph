@@ -17,12 +17,12 @@ class Subtopic(BaseModel):
 class TopicBreakdown(BaseModel):
     """A breakdown of a subject into subtopics."""
     description: str = Field(
-        description="""A brief description of the subject, e.g. 'Mathematics' and the 
-        subtopics that are part of the subject"""
+        description="""A brief description of the subject, e.g. 'Mathematics'"""
     )
     subtopics: List[Subtopic] = Field(
-        description="""A list (between 2 and 10 items as necessary) of high level
-            subtopics that build up to the subject."""
+        description="""A list (between 0 and 3 items as necessary) of high level
+            learnable subtopics (like modules) that a student/user would learn along the 
+            path to mastering said topic."""
     )
 
 class Mapping(BaseModel):

@@ -19,7 +19,11 @@ def parse_args() -> argparse.Namespace:
 def interact_with_user(model: str) -> None:
     """Interact with the user to generate the skill graph."""
     subject = input("Enter the subject you want to generate a skill graph for: ")
-    build_graph_layers(subject)
+
+    topic_breakdowns, topic_graphs = build_graph_layers(subject)
+    print(topic_graphs, "\n")
+    print(topic_breakdowns)
+
 
 def main() -> int:
     """Main entry point."""

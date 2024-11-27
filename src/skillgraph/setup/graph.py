@@ -3,33 +3,34 @@ from skillgraph.setup.topics import TopicMap, generate_topic_breakdown, generate
 
 
 def build_graph_layers(root_topic: str) -> TopicMap:
-    topic_breakdown, topic_map = build_graph(root_topic)
-
+    topic_breakdown, topic_graph = build_graph(root_topic)
     subtopics = topic_breakdown.content[0].parsed.subtopics
-    topic_map = generate_topic_map(subtopics).content[0].parsed.mapping
     
-    map_layers = [{}, {}]
-    map_layers[0][root_topic] = (topic_breakdown, topic_map)
+    topic_breakdowns = {}
+    topic_graphs = {}
+    topic_breakdowns[root_topic] = topic_breakdown
+    topic_graphs[root_topic] = topic_graph
    
     for subtopic in subtopics:
-        print(f" - {subtopic.name}: {subtopic.description} \n Required: {subtopic.required} \n")
-        subtopic_breakdown, subtopic_map = build_graph(subtopic.name)
-        map_layers[1][subtopic.name] = (subtopic_breakdown, subtopic_map)
-
-def build_graph(topic_name, show: bool = True):
-    topic_breakdown = generate_topic_breakdown(topic_name)
-    topic_description = topic_breakdown.content[0].parsed.description
-    print(topic_description, "\n")
+        print(f" - {subtopic.name}")
+        subtopic_breakdown, topic_graph = build_graph(subtopic.name)
+        topic_breakdowns[subtopic.name] = subtopic_breakdown.content[0].parsed
+        topic_graphs[subtopic.name] = topic_graph
     
+    return topic_breakdowns, topic_graphs
+
+
+def build_graph(topic_name: str, show: bool = True):
+    topic_breakdown = generate_topic_breakdown(topic_name)
     topics = topic_breakdown.content[0].parsed.subtopics
     topic_map = generate_topic_map(topics).content[0].parsed.mapping
-    
+    skill_graph = VisualGraph(topic_name, topic_map)
+
     if show:
-        skill_graph = VisualGraph(topic_name, topic_map)
         output_name = topic_name.replace(" ", "_") + ".html"
         skill_graph.show(output_path=output_name)
     
-    return topic_breakdown, topic_map
+    return topic_breakdown, skill_graph
 
 
 class VisualGraph:
