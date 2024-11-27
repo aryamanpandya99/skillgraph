@@ -2,26 +2,34 @@ from pyvis.network import Network
 from skillgraph.setup.topics import TopicMap, generate_topic_breakdown, generate_topic_map
 
 
-def build_graph(root_topic: str, layers: int = 3) -> TopicMap:
-    topic_breakdown = generate_topic_breakdown(root_topic)
-    topic_description = topic_breakdown.content[0].parsed.description
-    
-    print(topic_description, "\n")
+def build_graph_layers(root_topic: str) -> TopicMap:
+    topic_breakdown, topic_map = build_graph(root_topic)
+
+    subtopics = topic_breakdown.content[0].parsed.subtopics
     topic_map = generate_topic_map(subtopics).content[0].parsed.mapping
     
-    map_layers = [{} for _ in range(layers)]
-    map_layers[0][root_topic] = topic_map
+    map_layers = [{}, {}]
+    map_layers[0][root_topic] = (topic_breakdown, topic_map)
    
-    for layer in range(layers):
-        subtopics = topic_breakdown.content[0].parsed.subtopics
-        for subtopic in subtopics:
-            subtopic_breakdown = generate_topic_breakdown(subtopic.name)
-        
-            topic_map = generate_topic_map(subtopics).content[0].parsed.mapping
+    for subtopic in subtopics:
+        print(f" - {subtopic.name}: {subtopic.description} \n Required: {subtopic.required} \n")
+        subtopic_breakdown, subtopic_map = build_graph(subtopic.name)
+        map_layers[1][subtopic.name] = (subtopic_breakdown, subtopic_map)
 
-        
-        skill_graph = SkillGraph(subject, topic_map)
-        skill_graph.show()
+def build_graph(topic_name, show: bool = True):
+    topic_breakdown = generate_topic_breakdown(topic_name)
+    topic_description = topic_breakdown.content[0].parsed.description
+    print(topic_description, "\n")
+    
+    topics = topic_breakdown.content[0].parsed.subtopics
+    topic_map = generate_topic_map(topics).content[0].parsed.mapping
+    
+    if show:
+        skill_graph = VisualGraph(topic_name, topic_map)
+        output_name = topic_name.replace(" ", "_") + ".html"
+        skill_graph.show(output_path=output_name)
+    
+    return topic_breakdown, topic_map
 
 
 class VisualGraph:
