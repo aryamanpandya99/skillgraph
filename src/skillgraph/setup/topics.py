@@ -14,7 +14,7 @@ class Subtopic(BaseModel):
             False if it is optional to some degree"""
     )
 
-class SubjectBreakdown(BaseModel):
+class TopicBreakdown(BaseModel):
     """A breakdown of a subject into subtopics."""
     description: str = Field(
         description="""A brief description of the subject, e.g. 'Mathematics' and the 
@@ -40,8 +40,8 @@ class TopicMap(BaseModel):
         Not all topics will have dependencies."""
     )
 
-@ell.complex(model="gpt-4o-2024-08-06", response_format=SubjectBreakdown)
-def generate_subject(subject: str) -> SubjectBreakdown:
+@ell.complex(model="gpt-4o-2024-08-06", response_format=TopicBreakdown)
+def generate_topic_breakdown(subject: str) -> TopicBreakdown:
     """
     You are a subject generator. Given the name of a subject, you need to return a 
     structured description of the subject and the subtopics that are part of the subject.

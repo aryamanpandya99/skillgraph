@@ -1,8 +1,30 @@
 from pyvis.network import Network
-from .subjects import TopicMap
+from skillgraph.setup.topics import TopicMap, generate_topic_breakdown, generate_topic_map
 
 
-class SkillGraph:
+def build_graph(root_topic: str, layers: int = 3) -> TopicMap:
+    topic_breakdown = generate_topic_breakdown(root_topic)
+    topic_description = topic_breakdown.content[0].parsed.description
+    
+    print(topic_description, "\n")
+    topic_map = generate_topic_map(subtopics).content[0].parsed.mapping
+    
+    map_layers = [{} for _ in range(layers)]
+    map_layers[0][root_topic] = topic_map
+   
+    for layer in range(layers):
+        subtopics = topic_breakdown.content[0].parsed.subtopics
+        for subtopic in subtopics:
+            subtopic_breakdown = generate_topic_breakdown(subtopic.name)
+        
+            topic_map = generate_topic_map(subtopics).content[0].parsed.mapping
+
+        
+        skill_graph = SkillGraph(subject, topic_map)
+        skill_graph.show()
+
+
+class VisualGraph:
     """Creates and manages an interactive skill dependency graph visualization."""
     
     def __init__(self, title: str, topic_map: TopicMap):

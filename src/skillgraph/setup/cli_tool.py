@@ -1,7 +1,7 @@
 import argparse
 import sys
 from skillgraph.setup.graph import SkillGraph
-from skillgraph.setup.subjects import generate_subject, generate_topic_map
+from skillgraph.setup.topics import generate_subject, generate_topic_map
 
 def parse_args() -> argparse.Namespace:
     """Parse command line arguments."""
@@ -21,6 +21,7 @@ def interact_with_user(model: str) -> None:
     """Interact with the user to generate the skill graph."""
     subject = input("Enter the subject you want to generate a skill graph for: ")
     subject_breakdown = generate_subject(subject)
+    
     subject_description = subject_breakdown.content[0].parsed.description
     subtopics = subject_breakdown.content[0].parsed.subtopics
     print(subject_description, "\n")
