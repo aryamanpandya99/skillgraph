@@ -2,7 +2,7 @@
 
 Knowledge Graph is a comprehensive application designed to assist users building knowledge trees for skills that they want to gain. It breaks down the skill into smaller sub-skills and then tracks user progress based on descriptions of actions performed by the user or inferred from user behavior (git logs, pdfs, pictures of notes, etc.).
 
-## Features
+## Features (to be implemented)
 
 - **Knowledge Tree Visualization**
   - Interactive tree-based UI for visualizing skill hierarchies
