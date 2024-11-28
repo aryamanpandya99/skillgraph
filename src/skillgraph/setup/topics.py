@@ -37,7 +37,8 @@ class TopicMap(BaseModel):
     mapping: List[Mapping] = Field(
         description="""A mapping of dependencies between a list of topics.
         The key is the topic name and the value is the topic name that it depends on. 
-        Not all topics will have dependencies."""
+        Not all topics will have dependencies.
+        There should be no circular dependencies."""
     )
 
 @ell.complex(model="gpt-4o-2024-08-06", response_format=TopicBreakdown)
