@@ -1,6 +1,8 @@
 import argparse
 import sys
+
 from skillgraph.setup.graph import build_graph_layers
+
 
 def parse_args() -> argparse.Namespace:
     """Parse command line arguments."""
@@ -21,8 +23,10 @@ def interact_with_user(model: str) -> None:
     subject = input("Enter the subject you want to generate a skill graph for: ")
 
     topic_breakdowns, topic_graphs = build_graph_layers(subject)
+    """
     print(topic_graphs, "\n")
     print(topic_breakdowns)
+    """
 
 
 def main() -> int:

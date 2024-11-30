@@ -1,6 +1,7 @@
-import ell 
-from pydantic import BaseModel, Field
 from typing import List
+
+import ell
+from pydantic import BaseModel, Field
 
 
 class Subtopic(BaseModel):
@@ -38,7 +39,7 @@ class TopicMap(BaseModel):
         description="""A mapping of dependencies between a list of topics.
         The key is the topic name and the value is the topic name that it depends on. 
         Not all topics will have dependencies.
-        There should be no circular dependencies."""
+        There **must not** be any circular dependencies or cycles."""
     )
 
 @ell.complex(model="gpt-4o-2024-08-06", response_format=TopicBreakdown)
